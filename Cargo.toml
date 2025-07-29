@@ -15,4 +15,24 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 thiserror = "1"
 once_cell = "1"
-reqwest = { version = "0.12", features = ["json"] }
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+
+# MCP support
+rmcp = { path = "../rust-sdk/crates/rmcp", features = ["server", "client", "macros", "transport-streamable-http-server", "transport-streamable-http-client", "schemars", "reqwest-tls-no-provider"] }
+rmcp-macros = { path = "../rust-sdk/crates/rmcp-macros" }
+
+[lib]
+name = "keycloak_management_api"
+path = "src/lib.rs"
+
+[[bin]]
+name = "keycloak-mcp-server"
+path = "src/mcp_server.rs"
+
+[[bin]]
+name = "keycloak-api-server"
+path = "src/main.rs"
+
+[[bin]]
+name = "mcp-client-example"
+path = "examples/mcp_client.rs"
